@@ -20,7 +20,9 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" Grid.Row="0" Margin="0 0 10 0">
                     <TextBlock Text="Students"/>
-                    <ComboBox ItemsSource="{Binding Path=Students}" DisplayMemberPath="FirstName" />
+                    <ComboBox ItemsSource="{Binding Path=Students}" 
+                              DisplayMemberPath="FirstName" 
+                              SelectedItem="{Binding Path=SelectedEnrollmentStudent, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="0" Margin="0 0 10 0">
                     <TextBlock Text="Courses"/>
