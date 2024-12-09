@@ -24,7 +24,9 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="0" Margin="0 0 10 0">
                     <TextBlock Text="Courses"/>
-                    <ComboBox ItemsSource="{Binding Path=Courses}" DisplayMemberPath="Description"/>
+                    <ComboBox ItemsSource="{Binding Path=Courses}" 
+                              DisplayMemberPath="Description" 
+                              SelectedItem="{Binding Path=SelectedEnrollmentCourse, Mode=TwoWay}"/>
                 </StackPanel>
                 <ListView Grid.Column="0" 
                           Grid.Row="3" 

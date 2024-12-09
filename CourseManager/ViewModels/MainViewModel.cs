@@ -112,7 +112,12 @@ namespace CourseManager.ViewModels
         public EnrollmentModel SelectedEnrollment //telling what is selected in the listview
         {
             get { return _selectedEnrollment;}
-            set { _selectedEnrollment = value;}
+            set 
+            { 
+                _selectedEnrollment = value;
+                NotifyOfPropertyChange(() => SelectedEnrollment);
+                NotifyOfPropertyChange(() => SelectedEnrollmentCourse);
+            }
         }
 
         //whenever app status changes I want AppStatus property to know and alert a UI (StatusBar)
