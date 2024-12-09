@@ -59,7 +59,7 @@ namespace CourseManager.ViewModels
                     //enrollment IDs will be the keys by which you can find the rest information
                     var courseDictionary = _courses.ToDictionary(b => b.CourseId);
 
-                    //if there is a selected enrollemts (the enrollment on which we click on the listview) and its course is there (if there is a course for that enrollment)
+                    //if there is a selected enrollments (the enrollment on which we click on the listview) and its course is there (if there is a course for that enrollment)
                     if (SelectedEnrollment != null && courseDictionary.ContainsKey(SelectedEnrollment.CourseId))
                     {
                         return courseDictionary[SelectedEnrollment.CourseId];
@@ -77,6 +77,44 @@ namespace CourseManager.ViewModels
                 {
                     var selectedEnrollmentCourse = value;
                     SelectedEnrollment.CourseId = selectedEnrollmentCourse.CourseId;
+                    //notify the Ui that selected enrollment just changed
+                    NotifyOfPropertyChange(() => SelectedEnrollment);
+                }
+                catch (Exception ex)
+                {
+                    UpdateAppStatus(ex.Message);
+                }
+            }
+        }
+
+        public StudentModel SelectedEnrollmentStudent
+        {
+            get
+            {
+                try
+                {
+                    //turn _students into dictionary
+                    //enrollment IDs will be the keys by which you can find the rest information
+                    var studentDictionary = _students.ToDictionary(b => b.StudentId);
+
+                    //if there is a selected enrollments (the enrollment on which we click on the listview) and its student is there (if there is a studentfor that enrollment)
+                    if (SelectedEnrollment != null && studentDictionary.ContainsKey(SelectedEnrollment.StudentId))
+                    {
+                        return studentDictionary[SelectedEnrollment.StudentId];
+                    }
+                }
+                catch (Exception ex)
+                {
+                    UpdateAppStatus(ex.Message);
+                }
+                return null;
+            }
+            set
+            {
+                try
+                {
+                    var selectedEnrollmentStudent = value;
+                    SelectedEnrollment.StudentId = selectedEnrollmentStudent.StudentId;
                     //notify the Ui that selected enrollment just changed
                     NotifyOfPropertyChange(() => SelectedEnrollment);
                 }
