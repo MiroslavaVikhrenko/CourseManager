@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace CourseManager.ViewModels
 {
@@ -27,7 +28,7 @@ namespace CourseManager.ViewModels
         //constructor
         public MainViewModel() //load the data from db
         {
-            SelectedEnrollment = new EnrollmentModel();
+            SelectedEnrollment = new EnrollmentModel(); //represents the enrollment on which we click on the listview
 
             try
             {
@@ -44,10 +45,48 @@ namespace CourseManager.ViewModels
             }
             catch (Exception ex)
             {
-                AppStatus = ex.Message;
-                NotifyOfPropertyChange(() => AppStatus); //whenever app status changes I want AppStatus property to know and alert a UI (StatusBar)
+                UpdateAppStatus(ex.Message); 
             }
         }
+
+        public CourseModel SelectedEnrollmentCourse
+        {
+            get
+            {
+                try
+                {
+                    //turn _courses into dictionary
+                    //enrollment IDs will be the keys by which you can find the rest information
+                    var courseDictionary = _courses.ToDictionary(b => b.CourseId);
+
+                    //if there is a selected enrollemts (the enrollment on which we click on the listview) and its course is there (if there is a course for that enrollment)
+                    if (SelectedEnrollment != null && courseDictionary.ContainsKey(SelectedEnrollment.CourseId))
+                    {
+                        return courseDictionary[SelectedEnrollment.CourseId];
+                    }
+                }
+                catch (Exception ex)
+                {
+                    UpdateAppStatus(ex.Message);
+                }
+                return null;
+            }
+            set
+            {
+                try
+                {
+                    var selectedEnrollmentCourse = value;
+                    SelectedEnrollment.CourseId = selectedEnrollmentCourse.CourseId;
+                    //notify the Ui that selected enrollment just changed
+                    NotifyOfPropertyChange(() => SelectedEnrollment);
+                }
+                catch (Exception ex)
+                {
+                    UpdateAppStatus(ex.Message);
+                }
+            }
+        }
+
         public BindableCollection<EnrollmentModel> Enrollments
         {
             get { return _enrollments; }
@@ -74,6 +113,13 @@ namespace CourseManager.ViewModels
         {
             get { return _selectedEnrollment;}
             set { _selectedEnrollment = value;}
+        }
+
+        //whenever app status changes I want AppStatus property to know and alert a UI (StatusBar)
+        private void UpdateAppStatus(string message)
+        {
+            AppStatus = message;
+            NotifyOfPropertyChange(() => AppStatus);
         }
     }
 }
