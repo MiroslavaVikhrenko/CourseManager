@@ -155,6 +155,7 @@ namespace CourseManager.ViewModels
                 _selectedEnrollment = value;
                 NotifyOfPropertyChange(() => SelectedEnrollment);
                 NotifyOfPropertyChange(() => SelectedEnrollmentCourse);
+                NotifyOfPropertyChange(() => SelectedEnrollmentStudent);
             }
         }
 
