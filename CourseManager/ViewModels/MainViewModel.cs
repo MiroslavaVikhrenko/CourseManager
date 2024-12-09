@@ -21,6 +21,9 @@ namespace CourseManager.ViewModels
         private string _appStatus;
 
         private EnrollmentModel _selectedEnrollment;
+
+        private EnrollmentCommand _enrollmentCommand;
+
         //constructor
         public MainViewModel() //load the data from db
         {
@@ -28,6 +31,9 @@ namespace CourseManager.ViewModels
 
             try
             {
+                _enrollmentCommand = new EnrollmentCommand(_connectionString);
+                Enrollments.AddRange(_enrollmentCommand.GetList());
+
                 StudentCommand studentCommand = new StudentCommand(_connectionString);
                 Students.AddRange(studentCommand.GetList()); //the list that is coming from the db we're gonna add to Students collection
                                                              //and this list is going to bound to combobox in UI (ItemSource)
@@ -42,7 +48,11 @@ namespace CourseManager.ViewModels
                 NotifyOfPropertyChange(() => AppStatus); //whenever app status changes I want AppStatus property to know and alert a UI (StatusBar)
             }
         }
-
+        public BindableCollection<EnrollmentModel> Enrollments
+        {
+            get { return _enrollments; }
+            set { _enrollments = value; }
+        }
         public BindableCollection<StudentModel> Students
         {
             get { return _students; }
