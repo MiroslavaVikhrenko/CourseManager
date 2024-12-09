@@ -159,6 +159,43 @@ namespace CourseManager.ViewModels
             }
         }
 
+        public void CreateNewEnrollment() //name matches with the button name in UI
+        {
+            try
+            {
+                SelectedEnrollment = new EnrollmentModel();
+                UpdateAppStatus("New enrollment created");
+            }
+            catch (Exception ex)
+            {
+                UpdateAppStatus(ex.Message);
+            }
+        }
+
+        public void SaveEnrollment()
+        {
+            try
+            {
+                var enrollmentDictionary = _enrollments.ToDictionary(p => p.EnrollmentId);
+
+                if (SelectedEnrollment != null)
+                {
+                    _enrollmentCommand.Upsert(SelectedEnrollment); //pass selected enrollment, turn into datatable and upsert into stored procedure
+
+                    //tale bindable collection enrollments - once I want to update I need to clear out my old data
+                    //and then get fresh from the db and add it to my screen
+                    Enrollments.Clear();
+                    Enrollments.AddRange(_enrollmentCommand.GetList());
+
+                    UpdateAppStatus("Enrollment saved");
+                }
+            }
+            catch (Exception ex)
+            {
+                UpdateAppStatus(ex.Message);
+            }
+        }
+
         //whenever app status changes I want AppStatus property to know and alert a UI (StatusBar)
         private void UpdateAppStatus(string message)
         {

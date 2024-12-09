@@ -41,8 +41,16 @@
                 </ListView>
             </Grid>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Save Enrollment" HorizontalAlignment="Left" Width="150" Margin="0 10 10 0" />
-                <Button Content="Create New Enrollment" HorizontalAlignment="Left" Width="150" Margin="0 10 10 0" />
+                <Button Content="Save Enrollment" 
+                        HorizontalAlignment="Left" 
+                        Width="150" 
+                        Margin="0 10 10 0" 
+                        x:Name="SaveEnrollment"/>
+                <Button Content="Create New Enrollment" 
+                        HorizontalAlignment="Left" 
+                        Width="150" 
+                        Margin="0 10 10 0"
+                        x:Name="CreateNewEnrollment"/>
             </StackPanel>
             <StatusBar Height="25" Margin="0 10 0 0">
                 <StatusBarItem TextBlock.TextAlignment="Left">
