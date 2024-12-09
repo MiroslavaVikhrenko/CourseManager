@@ -13,4 +13,9 @@
     <PackageReference Include="Dapper" Version="2.1.35" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>
